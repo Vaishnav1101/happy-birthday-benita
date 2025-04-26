@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Benita!</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, pink, yellow, lightblue, violet);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            text-align: center;
+            overflow-x: hidden;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        #present-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 10000;
+        }
+        #present-buttons {
+            margin-top: 30px;
+        }
+        #present-screen button {
+            margin: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        h1 {
+            font-size: 60px;
+            margin-top: 20px;
+            text-shadow: 2px 2px 8px #000;
+            animation: rainbow 2s infinite;
+        }
+        @keyframes rainbow {
+            0% { color: red; }
+            14% { color: orange; }
+            28% { color: yellow; }
+            42% { color: green; }
+            57% { color: blue; }
+            71% { color: indigo; }
+            85% { color: violet; }
+            100% { color: red; }
+        }
+        .video-container {
+            margin-top: 20px;
+        }
+        .meme {
+            margin: 20px;
+            width: 300px;
+            border: 5px dashed white;
+            border-radius: 20px;
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .shake {
+            animation: shake 0.5s;
+            animation-iteration-count: 5;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Present screen -->
+<div id="present-screen">
+    <div>🎁 Do you want to open the present? 🎁</div>
+    <div id="present-buttons">
+        <button onclick="openPresent()">Yes</button>
+        <button id="no-button" onmouseover="moveNoButton()">No</button>
+    </div>
+</div>
+
+<!-- Main party content -->
+<div id="main-content" class="hidden">
+    <h1>🎉 Happy Birthday Benita!!! 🎉</h1>
+
+    <div class="video-container">
+        <video id="birthdayVideo" width="500" controls autoplay>
+            <source src="benita.mov" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <h2>You are the QUEEN of Birthdays 👑</h2>
+
+    <!-- Funny Memes -->
+    <img src="https://i.imgflip.com/4/4t0m5.jpg" class="meme" alt="Birthday Meme 1">
+    <img src="https://i.imgflip.com/1bij.jpg" class="meme" alt="Birthday Meme 2">
+    <img src="https://i.imgflip.com/30b1gx.jpg" class="meme" alt="Birthday Meme 3">
+</div>
+
+<!-- Confetti Script -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+<script>
+    function openPresent() {
+        // Completely remove the present screen
+        document.getElementById('present-screen').remove();
+        document.getElementById('main-content').classList.remove('hidden');
+
+        // Play the video manually
+        const video = document.getElementById('birthdayVideo');
+        video.play();
+
+        // Shake the screen
+        document.body.classList.add('shake');
+        setTimeout(() => {
+            document.body.classList.remove('shake');
+        }, 3000);
+
+        // Confetti explosion
+        confetti({
+            particleCount: 500,
+            spread: 120,
+            origin: { y: 0.6 }
+        });
+
+        setInterval(() => {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }, 2000);
+
+        // Silly popup after a few seconds
+        setTimeout(() => {
+            alert('Benita = Birthday Legend 🥳🎂👑');
+        }, 5000);
+    }
+
+    function moveNoButton() {
+        const button = document.getElementById('no-button');
+        const newX = Math.random() * (window.innerWidth - 150);
+        const newY = Math.random() * (window.innerHeight - 100);
+        button.style.position = 'absolute';
+        button.style.left = newX + 'px';
+        button.style.top = newY + 'px';
+    }
+</script>
+
+</body>
+</html>
